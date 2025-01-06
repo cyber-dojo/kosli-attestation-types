@@ -30,9 +30,23 @@ jobs:
         if: ${{ github.ref == 'refs/heads/main' }}
         run:
           kosli create attestation-type test-metrics
-            --schema=test-metrics.schema.json
+            --schema=metrics-test.schema.json
             --jq ".test_count >= .variables.min.test_count"
             --jq ".total_time <= .variables.max.total_time"
             --jq ".failure_count == 0"
             --jq ".error_count == 0"
             --jq ".skip_count == 0"
+
+      - name: Create coverage metrics attestation type
+        if: ${{ github.ref == 'refs/heads/main' }}
+        run:
+          kosli create attestation-type coverage-metrics
+            --schema=metrics-coverage.schema.json
+            --jq ".test_lines_total <= .variables.max.test_lines_total"
+            --jq ".test_lines_missed <= 0"
+            --jq ".test_branches_total <= 0"
+            --jq ".test_branches_missed <= 0"          
+            --jq ".code_lines_total <= .variables.max.code_lines_total"
+            --jq ".code_lines_missed <= .variables.max.code_lines_missed"
+            --jq ".code_branches_total <= .variables.max.code_branches_total"
+            --jq ".code_branches_missed <= .variables.max.code_branches_missed"
