@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
-  "description": "Schema for test execution results",
+  "description": "Schema for test execution metrics",
   "properties": {
     "error_count": {
       "type": "integer",

@@ -1,39 +1,57 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
-  "description": "Schema for test execution results",
+  "description": "Schema for test coverage metrics",
   "properties": {
-    "error_count": {
+    "test_lines_total": {
       "type": "integer",
-      "description": "Number of errors encountered during test execution",
+      "description": "Number of lines of test code",
       "minimum": 0
     },
-    "failure_count": {
+    "test_lines_missed": {
       "type": "integer",
-      "description": "Number of failed tests",
+      "description": "Number of lines of test code not covered",
       "minimum": 0
     },
-    "skip_count": {
+    "test_branches_total": {
       "type": "integer",
-      "description": "Number of skipped tests",
+      "description": "Number of branches in test code",
       "minimum": 0
     },
-    "test_count": {
+    "test_branches_missed": {
       "type": "integer",
-      "description": "Total number of tests executed",
+      "description": "Number of branches in test code not covered",
       "minimum": 0
     },
-    "total_time": {
+    "code_lines_total": {
       "type": "number",
-      "description": "Total execution time in seconds",
+      "description": "Number of lines of code",
+      "minimum": 0
+    },
+    "code_lines_missed": {
+      "type": "number",
+      "description": "Number of lines of code not covered",
+      "minimum": 0
+    },
+    "code_branches_total": {
+      "type": "number",
+      "description": "Number of branches in code",
+      "minimum": 0
+    },
+    "code_branches_missed": {
+      "type": "number",
+      "description": "Number of branches in code not covered",
       "minimum": 0
     }
   },
   "required": [
-    "error_count",
-    "failure_count",
-    "skip_count",
-    "test_count",
-    "total_time"
+    "test_lines_total",
+    "test_lines_missed",
+    "test_branches_total",
+    "test_branches_missed",
+    "code_lines_total",
+    "code_lines_missed",
+    "code_branches_total",
+    "code_branches_missed"
   ]
 }
