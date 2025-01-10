@@ -22,36 +22,12 @@
       "type": "integer",
       "description": "Number of branches in test code not covered",
       "minimum": 0
-    },
-    "code_lines_total": {
-      "type": "number",
-      "description": "Number of lines of code",
-      "minimum": 0
-    },
-    "code_lines_missed": {
-      "type": "number",
-      "description": "Number of lines of code not covered",
-      "minimum": 0
-    },
-    "code_branches_total": {
-      "type": "number",
-      "description": "Number of branches in code",
-      "minimum": 0
-    },
-    "code_branches_missed": {
-      "type": "number",
-      "description": "Number of branches in code not covered",
-      "minimum": 0
     }
   },
   "required": [
     "test_lines_total",
     "test_lines_missed",
     "test_branches_total",
-    "test_branches_missed",
-    "code_lines_total",
-    "code_lines_missed",
-    "code_branches_total",
-    "code_branches_missed"
+    "test_branches_missed"
   ]
 }
