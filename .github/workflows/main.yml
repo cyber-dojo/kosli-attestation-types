@@ -39,7 +39,7 @@ jobs:
         run:
           kosli create attestation-type coverage-metrics
             --schema=metrics-coverage.schema.json
-            --jq ".test_line_total >= 1"
+            --jq ".test_lines_total >= 1"
             --jq ".test_lines_missed == 0"
             --jq ".test_branches_total == 0"
             --jq ".test_branches_missed == 0"
