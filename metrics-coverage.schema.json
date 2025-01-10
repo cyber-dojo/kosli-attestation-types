@@ -1,33 +1,67 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
-  "description": "Schema for test coverage metrics",
+  "required": ["code", "test"],
+  "additionalProperties": true,
   "properties": {
-    "test_lines_total": {
-      "type": "integer",
-      "description": "Number of lines of test code",
-      "minimum": 0
+    "code": {
+      "type": "object",
+      "required": [
+        "branches"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "branches": {
+          "type": "object",
+          "required": [
+            "total"
+          ],
+          "additionalProperties": true,
+          "properties": {
+            "total": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      }
     },
-    "test_lines_missed": {
-      "type": "integer",
-      "description": "Number of lines of test code not covered",
-      "minimum": 0
-    },
-    "test_branches_total": {
-      "type": "integer",
-      "description": "Number of branches in test code",
-      "minimum": 0
-    },
-    "test_branches_missed": {
-      "type": "integer",
-      "description": "Number of branches in test code not covered",
-      "minimum": 0
+    "test": {
+      "type": "object",
+      "required": ["lines", "branches"],
+      "additionalProperties": true,
+      "properties": {
+        "lines": {
+          "type": "object",
+          "required": ["total", "missed"],
+          "additionalProperties": true,
+          "properties": {
+            "total": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "missed": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "branches": {
+          "type": "object",
+          "required": ["total", "missed"],
+          "additionalProperties": true,
+          "properties": {
+            "total": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "missed": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      }
     }
-  },
-  "required": [
-    "test_lines_total",
-    "test_lines_missed",
-    "test_branches_total",
-    "test_branches_missed"
-  ]
+  }
 }
