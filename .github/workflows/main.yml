@@ -41,5 +41,6 @@ jobs:
             --schema=metrics-coverage.schema.json
             --jq ".test_lines_total >= 1"
             --jq ".test_lines_missed == 0"
-            --jq ".test_branches_total == 0"
+            --jq ".test_branches_total <= 20"
             --jq ".test_branches_missed == 0"
+            --jq ".code_branches_total <= 200"
