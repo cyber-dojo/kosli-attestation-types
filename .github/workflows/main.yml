@@ -44,3 +44,8 @@ jobs:
             --jq ".test.branches.total <= 20"
             --jq ".test.branches.missed == 0"
             --jq ".code.branches.total <= 200"
+
+      - name: Create artifact promotion attestation type
+        if: ${{ github.ref == 'refs/heads/main' }}
+        run:
+          kosli create attestation-type promotion
