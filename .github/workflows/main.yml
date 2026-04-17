@@ -49,3 +49,9 @@ jobs:
         if: ${{ github.ref == 'refs/heads/main' }}
         run:
           kosli create attestation-type promotion
+
+      - name: Create artifact promotion attestation type
+        if: ${{ github.ref == 'refs/heads/main' }}
+        run:
+          kosli create attestation-type kosli-evaluate-trails
+            --schema=kosli-evaluate-trails-schema.json
