@@ -63,3 +63,11 @@ jobs:
         run:
           kosli create attestation-type sbom-facts
             --schema=sbom-facts.schema.json
+
+      # Schema only, no --jq: the provenance facts attestation is a neutral data
+      # carrier; compliance is decided by the SDLC-CTRL-0002 rego, not by this type.
+      - name: Create provenance facts attestation type
+        if: ${{ github.ref == 'refs/heads/main' }}
+        run:
+          kosli create attestation-type provenance-facts
+            --schema=provenance-facts.schema.json
