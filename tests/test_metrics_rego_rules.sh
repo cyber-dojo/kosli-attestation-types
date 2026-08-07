@@ -77,9 +77,11 @@ test_deny_when_a_bounded_metric_is_absent()
 test_deny_when_the_named_attestation_is_missing_from_the_trail()
 {
   # The params name coverage-facts; a trail carrying only some other
-  # attestation must not read as compliant.
+  # attestation must not read as compliant. Denying is not enough on its own:
+  # without a reason, a CI failure here says only that something was wrong.
   evaluate_facts "some-other-facts" "$(cat "${COVERAGE_FIXTURE}")" "${COVERAGE_PARAMS}"
   assert_deny
+  assert_violation_message "no coverage-facts attestation on artifact web"
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
