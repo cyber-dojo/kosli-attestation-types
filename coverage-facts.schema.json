@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "description": "Line and branch coverage counts, per group. A neutral data carrier: compliance is decided by metrics-compliance.rego against per-repo bounds, not by this type.",
+  "required": [
+    "code",
+    "test"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "code": {
+      "$ref": "#/definitions/group"
+    },
+    "test": {
+      "$ref": "#/definitions/group"
+    }
+  },
+  "definitions": {
+    "counts": {
+      "type": "object",
+      "required": [
+        "total",
+        "covered",
+        "missed"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "total": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "covered": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "missed": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "group": {
+      "type": "object",
+      "required": [
+        "lines",
+        "branches"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "lines": {
+          "$ref": "#/definitions/counts"
+        },
+        "branches": {
+          "$ref": "#/definitions/counts"
+        }
+      }
+    }
+  }
+}

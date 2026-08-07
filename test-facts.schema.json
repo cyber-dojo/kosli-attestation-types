@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "description": "Counts and duration from one test run. A neutral data carrier: compliance is decided by metrics-compliance.rego against per-repo bounds, not by this type.",
+  "required": [
+    "test_count",
+    "failure_count",
+    "error_count",
+    "skip_count",
+    "total_time"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "test_count": {
+      "type": "integer",
+      "description": "Total number of tests executed",
+      "minimum": 0
+    },
+    "failure_count": {
+      "type": "integer",
+      "description": "Number of failed tests",
+      "minimum": 0
+    },
+    "error_count": {
+      "type": "integer",
+      "description": "Number of errors encountered during test execution",
+      "minimum": 0
+    },
+    "skip_count": {
+      "type": "integer",
+      "description": "Number of skipped tests",
+      "minimum": 0
+    },
+    "assertion_count": {
+      "type": "integer",
+      "description": "Number of assertions made",
+      "minimum": 0
+    },
+    "total_time": {
+      "type": "number",
+      "description": "Wall-clock seconds the run took",
+      "minimum": 0
+    }
+  }
+}
