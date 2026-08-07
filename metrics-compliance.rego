@@ -19,7 +19,15 @@ attestation_name := data.params.attestation_name
 
 default allow := false
 
-metrics := input.trail.compliance_status.artifacts_statuses[artifact_name].attestations_statuses[attestation_name].attestation_data
+# The attestations on the artifact the params name, or {} when that artifact is
+# absent, so that a missing attestation can be reported rather than only denied.
+artifact_attestations := object.get(
+	input.trail,
+	["compliance_status", "artifacts_statuses", artifact_name, "attestations_statuses"],
+	{},
+)
+
+metrics := artifact_attestations[attestation_name].attestation_data
 
 # Every numeric leaf of a bounds tree, as path -> bound.
 bounds(tree) := {path: bound |
@@ -83,4 +91,11 @@ violations contains msg if {
 
 violations contains "params name no bounds, so nothing is being checked" if {
 	not some_bound_is_set
+}
+
+# Without this, an absent attestation denies with no reason given: every other
+# violation rule reaches through metrics, which is exactly what is undefined.
+violations contains msg if {
+	not artifact_attestations[attestation_name]
+	msg := sprintf("no %v attestation on artifact %v", [attestation_name, artifact_name])
 }
