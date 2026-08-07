@@ -11,7 +11,27 @@ env:
 
 jobs:
 
+  # Gate on this repo's own rego policy tests. create-kosli-attestation-types
+  # needs this, so a broken policy fails before any type is created. The tests
+  # need jq (preinstalled) and the kosli CLI; they call `kosli evaluate input`,
+  # which makes no API calls, so no token is required.
+  test-policies:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - name: Setup Kosli CLI
+        uses: kosli-dev/setup-cli-action@v5
+        with:
+          version: ${{ vars.KOSLI_CLI_VERSION }}
+
+      - name: Run rego policy tests
+        run: make test
+
   create-kosli-attestation-types:
+    needs: test-policies
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -71,3 +91,23 @@ jobs:
         run:
           kosli create attestation-type provenance-facts
             --schema=provenance-facts.schema.json
+
+      # Schema only, no --jq, for the same reason as coverage-facts. The
+      # test-metrics type above decides compliance in its own --jq rules.
+      - name: Create test facts attestation type
+        if: ${{ github.ref == 'refs/heads/main' }}
+        run:
+          kosli create attestation-type test-facts
+            --schema=test-facts.schema.json
+
+      # Schema only, no --jq: the coverage facts attestation is a neutral data
+      # carrier; compliance is decided by metrics-compliance.rego against the
+      # bounds each repo supplies. The coverage-metrics type above takes the
+      # other approach, deciding compliance in its own --jq rules, which fixes
+      # one set of numbers for every repo attesting to it. Both types exist,
+      # and repos using coverage-metrics keep working unchanged.
+      - name: Create coverage facts attestation type
+        if: ${{ github.ref == 'refs/heads/main' }}
+        run:
+          kosli create attestation-type coverage-facts
+            --schema=coverage-facts.schema.json
