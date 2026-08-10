@@ -1,0 +1,26 @@
+{
+  "artifact_name": "web",
+  "attestation_name": "coverage-facts",
+  "bounds": {
+    "code": {
+      "lines": {
+        "total":  {"min": 1, "max": 496},
+        "missed": {"min": 0, "max": 0}
+      },
+      "branches": {
+        "total":  {"min": 1, "max": 33},
+        "missed": {"min": 0, "max": 3}
+      }
+    },
+    "test": {
+      "lines": {
+        "total":  {"min": 1, "max": 1340},
+        "missed": {"min": 0, "max": 9}
+      },
+      "branches": {
+        "total":  {"min": 1, "max": 26},
+        "missed": {"min": 0, "max": 8}
+      }
+    }
+  }
+}
