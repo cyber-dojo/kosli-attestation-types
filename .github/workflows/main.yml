@@ -47,7 +47,11 @@ jobs:
         with:
           version: ${{ vars.KOSLI_CLI_VERSION }}
 
+      # Only an org admin can publish, so this step alone uses the org-admin
+      # tokens, paired in order with the hosts in KOSLI_HOST.
       - name: Publish metrics compliance rego policy
+        env:
+          KOSLI_API_TOKEN: ${{ secrets.KOSLI_ADMIN_API_TOKEN }}
         run:
           kosli publish rego-policy metrics-compliance
             --path=metrics-compliance.rego
