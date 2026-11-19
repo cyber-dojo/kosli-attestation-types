@@ -106,6 +106,10 @@ within_bounds if {
 # cannot yield a compliant result.
 allow if within_bounds
 
+# Annotated as an entrypoint so a server-side evaluation returns the violations
+# in its result outputs. Kosli returns only annotated rules.
+# METADATA
+# entrypoint: true
 violations contains msg if {
 	some path, range in ranges
 	value := object.get(metrics, path, null)
