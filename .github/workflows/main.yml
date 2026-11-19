@@ -30,6 +30,32 @@ jobs:
       - name: Run rego policy tests
         run: make test
 
+  # Publishes metrics-compliance.rego so pipelines can evaluate it by identifier
+  # with `kosli evaluate policy --identifier metrics-compliance`, recording the
+  # decision against a control. Publishing unchanged files stores no new version.
+  publish-metrics-compliance-policy:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    needs: test-policies
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - name: Setup Kosli CLI
+        uses: kosli-dev/setup-cli-action@v5
+        with:
+          version: ${{ vars.KOSLI_CLI_VERSION }}
+
+      - name: Publish metrics compliance rego policy
+        run:
+          kosli publish rego-policy metrics-compliance
+            --path=metrics-compliance.rego
+            --input-schema=trail
+            --name="Metrics within bounds"
+            --description="Every bounded metric in an attested report lies within its min and max"
+            --comment="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA}"
+
   create-kosli-attestation-types:
     needs: test-policies
     runs-on: ubuntu-latest
